@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  /* --- Color Palette --- */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #172554 100%);
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --primary: #38bdf8;   /* Cyan Neon */
+  --accent: #facc15;    /* Gold */
+  --danger: #ef4444;    /* Red */
+  --success: #22c55e;   /* Green */
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  
+  /* --- Fonts --- */
+  --font-display: 'Teko', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+/* --- Global Reset --- */
+* { box-sizing: border-box; outline: none; }
+
+/* Update these two sections in your App.css */
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: #000;
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  /* Use 'dvh' (Dynamic Viewport Height) to fix mobile address bar issues */
+  min-height: 100dvh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevents whole page scrolling */
+  touch-action: none; /* Disables standard touch gestures like pull-to-refresh */
+}
+
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  /* Fill the screen on mobile, but keep card shape on desktop */
+  height: 100dvh; 
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  /* Handle iPhone Notch/Home Bar areas */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add this to Buttons to make them feel like native app buttons */
+button {
+  /* ... existing styles ... */
+  touch-action: manipulation; /* Prevents double-tap zoom delay */
+  -webkit-tap-highlight-color: transparent; /* Removes blue highlight on tap */
+}
+
+/* =========================================
+   SHARED COMPONENTS (Headers, Buttons, Inputs)
+   ========================================= */
+
+/* Headers */
+.logo {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  text-align: center;
+  margin: 10px 0 25px 0;
+  background: linear-gradient(to right, #60a5fa, var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.history-header h2 { margin: 0; font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 1px; color: var(--text-main); }
+
+/* Inputs & Selects */
+input, select, .team-select {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--glass-border);
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: white;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, .team-select:focus {
+  border-color: var(--primary);
+  background: rgba(56, 189, 248, 0.1);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+}
+
+/* Custom Dropdown Arrow */
+.team-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+.team-select option { background-color: #0f172a; }
+
+/* Buttons */
+button { cursor: pointer; font-family: var(--font-display); }
+
+.back-btn, .clear-btn { background: none; border: none; font-size: 1.1rem; color: var(--text-muted); transition: color 0.2s; }
+.back-btn:hover { color: var(--primary); }
+.clear-btn:hover { color: var(--danger); }
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, var(--primary), #2563eb);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  margin-top: 15px;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.btn-secondary:hover { border-color: var(--primary); color: white; background: rgba(56, 189, 248, 0.1); }
+
+/* =========================================
+   VIEW: SETUP & TEAMS
+   ========================================= */
+.setup-mode { padding: 20px; overflow-y: auto; }
+.setup-card { animation: fadeIn 0.4s ease; }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; color: var(--primary); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; letter-spacing: 1px; }
+
+.team-inputs { display: flex; align-items: center; gap: 10px; }
+.vs { font-family: var(--font-display); font-size: 1.5rem; color: var(--danger); font-style: italic; }
+
+.menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px; border-top: 1px solid var(--glass-border); padding-top: 20px; }
+.full-width { grid-column: span 2; }
+
+/* Teams Manager Specifics */
+.config-section { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+.config-section h3, .add-team-form h3 { margin: 0 0 10px 0; font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); }
+.points-inputs { display: flex; gap: 10px; }
+.p-input { flex: 1; }
+
+.add-team-form { border-top: 1px solid var(--glass-border); padding-top: 20px; margin-bottom: 20px; }
+.file-label { display: block; padding: 12px; background: rgba(255,255,255,0.05); text-align: center; border-radius: 10px; border: 1px dashed var(--text-muted); color: var(--text-muted); margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-size: 0.9rem; }
+.file-label:hover { border-color: var(--primary); color: var(--primary); background: rgba(56, 189, 248, 0.05); }
+
+.team-list { max-height: 300px; overflow-y: auto; padding-right: 5px; }
+.team-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); padding: 10px 15px; margin-bottom: 8px; border-radius: 10px; border: 1px solid transparent; transition: border 0.2s; }
+.team-item:hover { border-color: var(--glass-border); }
+.t-info { display: flex; align-items: center; gap: 12px; }
+.t-info img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); }
+.no-logo { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+.t-info span { font-weight: 600; font-size: 1rem; }
+.del-btn { background: none; border: none; color: var(--danger); font-size: 1.5rem; line-height: 1; padding: 0 5px; }
+
+/* =========================================
+   VIEW: POINTS TABLE
+   ========================================= */
+.points-table-container { overflow-x: auto; border-radius: 12px; border: 1px solid var(--glass-border); }
+.points-table { width: 100%; border-collapse: collapse; min-width: 300px; }
+.points-table th { text-align: left; padding: 12px 15px; background: rgba(0,0,0,0.3); color: var(--primary); font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px; }
+.points-table td { padding: 12px 15px; border-bottom: 1px solid var(--glass-border); font-size: 0.95rem; }
+.points-table tr:last-child td { border-bottom: none; }
+.pt-name { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.pt-name img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--glass-border); }
+.pt-pts { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); font-weight: bold; }
+
+/* =========================================
+   VIEW: SCOREBOARD
+   ========================================= */
+.match-header { background: rgba(0,0,0,0.3); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); }
+.team-badge { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+.team-badge.secondary { color: var(--text-muted); font-size: 1.4rem; }
+.vs-badge { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
+
+.scoreboard-card { padding: 20px; text-align: center; position: relative; }
+.main-score-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.score-big { font-family: var(--font-display); font-size: 4.5rem; line-height: 1; background: linear-gradient(to bottom, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.wickets { font-size: 2.5rem; color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); }
+.overs-area { text-align: right; }
+.overs-area span { display: block; font-size: 0.7rem; color: var(--primary); letter-spacing: 2px; }
+.overs-area strong { font-family: var(--font-display); font-size: 2rem; line-height: 1; color: var(--accent); }
+.total-overs { color: var(--text-muted); font-size: 1rem; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 12px; border: 1px solid var(--glass-border); }
+.stat-item { display: flex; flex-direction: column; align-items: center; }
+.stat-item label { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 1px; margin-bottom: 2px; text-transform: uppercase; }
+.stat-item span { font-family: var(--font-display); font-size: 1.4rem; color: white; }
+.stat-item.highlight span { color: var(--accent); }
+
+.chase-msg { margin-top: 15px; background: rgba(239, 68, 68, 0.15); color: #fca5a5; padding: 10px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(239, 68, 68, 0.3); }
+.chase-msg strong { color: white; }
+
+/* Info Card (Players) */
+.info-card { margin: 0 15px; background: var(--card-bg); border-radius: 16px; padding: 15px; border: 1px solid var(--glass-border); flex-grow: 1; overflow: hidden; }
+.players-row { display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px; margin-bottom: 10px; }
+.batsmen-col, .bowler-col { display: flex; flex-direction: column; gap: 8px; }
+.player { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; opacity: 0.6; }
+.player.active { opacity: 1; color: var(--primary); font-weight: 600; }
+.player .icon { font-size: 0.8rem; }
+.player .runs { color: var(--accent); font-weight: bold; margin-left: auto; }
+
+.timeline-row { display: flex; align-items: center; gap: 10px; }
+.timeline-row .label { font-size: 0.7rem; font-weight: bold; color: var(--text-muted); white-space: nowrap; }
+.balls-scroll { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+.ball-bubble { width: 28px; height: 28px; border-radius: 50%; background: #334155; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0; }
+.ball-bubble.w { background: var(--danger); color: white; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+.ball-bubble.b { background: var(--success); color: #000; box-shadow: 0 0 10px rgba(34, 197, 94, 0.4); }
+
+/* Control Pad */
+.control-pad { margin-top: auto; background: #0f172a; padding: 20px; border-top: 1px solid var(--glass-border); display: flex; flex-direction: column; gap: 12px; }
+.control-pad.disabled { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+.pad-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+.control-pad button { padding: 16px 0; border: none; border-radius: 12px; font-size: 1.5rem; font-weight: 600; transition: all 0.1s; box-shadow: 0 4px 0 rgba(0,0,0,0.5); position: relative; color: white; }
+.control-pad button:active { transform: translateY(4px); box-shadow: none; }
+
+.btn-run { background: #334155; }
+.btn-boundary { background: var(--success); color: #0f172a !important; }
+.btn-six { background: var(--primary); color: #0f172a !important; }
+.btn-wicket { background: var(--danger); }
+.btn-extra { background: var(--accent); color: #0f172a !important; font-size: 1.2rem; }
+
+/* =========================================
+   OVERLAYS
+   ========================================= */
+.match-result-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; animation: popIn 0.4s ease; }
+.match-result-overlay h2 { color: var(--accent); margin-bottom: 10px; font-family: var(--font-display); font-size: 2.2rem; }
+.result-text { font-size: 1.2rem; margin-bottom: 25px; text-align: center; color: white; padding: 0 20px; }
+.save-btn { background: var(--success); color: #0f172a; padding: 12px 30px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.1rem; box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+
+/* History View */
+.history-mode { background: #0f172a; }
+.history-list { padding: 15px; overflow-y: auto; height: 100%; }
+.no-data { text-align: center; color: var(--text-muted); margin-top: 50px; }
+.history-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+.h-date { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.h-teams { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.h-team { display: flex; flex-direction: column; }
+.h-team span { font-size: 0.8rem; color: var(--text-muted); }
+.h-team strong { font-size: 1.3rem; font-family: var(--font-display); color: white; }
+.h-vs { font-weight: bold; color: var(--glass-border); font-size: 0.8rem; }
+.h-result { border-top: 1px solid var(--glass-border); padding-top: 8px; color: var(--success); font-size: 0.9rem; text-align: center; font-weight: 500; }
+
+@keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
