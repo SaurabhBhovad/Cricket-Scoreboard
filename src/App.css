@@ -30,8 +30,8 @@ body {
 
 .app-container {
   width: 100%;
-  max-width: 500px; 
-  height: 90vh;     
+  max-width: 500px;
+  height: 90vh;
   max-height: 850px;
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(12px);
@@ -47,11 +47,12 @@ body {
 /* --- HEADERS --- */
 .logo {
   font-family: var(--font-display);
-  font-size: 3rem; 
+  font-size: 3rem;
   text-align: center;
   margin: 20px 0;
   background: linear-gradient(to right, #60a5fa, var(--primary));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 2px;
 }
@@ -71,23 +72,21 @@ input, select, .team-select {
   width: 100%;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--glass-border);
-  padding: 10px 12px; 
+  padding: 10px 12px;
   border-radius: 8px;
   color: white;
   font-family: var(--font-body);
   font-size: 0.9rem;
   margin-bottom: 10px;
 }
-.team-select { appearance: none; }
-.team-select option { background-color: #0f172a; }
 
 button { cursor: pointer; font-family: var(--font-display); transition: all 0.2s; }
-.back-btn, .clear-btn { background: none; border: none; font-size: 1rem; color: var(--text-muted); }
+.back-btn { background: none; border: none; font-size: 1rem; color: var(--text-muted); }
 .btn-text { background: none; border: none; color: var(--text-muted); font-size: 0.9rem; text-decoration: underline; }
 
 .btn-primary {
   width: 100%;
-  padding: 12px; 
+  padding: 12px;
   background: linear-gradient(90deg, var(--primary), #2563eb);
   border: none;
   border-radius: 8px;
@@ -108,176 +107,153 @@ button { cursor: pointer; font-family: var(--font-display); transition: all 0.2s
   font-size: 1.1rem;
 }
 
-/* --- LISTS & HISTORY --- */
-.history-list, .team-list { padding: 15px; overflow-y: auto; flex-grow: 1; }
-
-.history-card { 
-  background: rgba(255,255,255,0.03); 
-  border: 1px solid var(--glass-border); 
-  border-radius: 10px; 
-  padding: 12px; 
-  margin-bottom: 10px; 
-  display: flex; 
-  align-items: center;
+/* --- SCOREBOARD ALIGNMENT (FIXED) --- */
+.main-score-area {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin: 15px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 20px;
 }
-.h-date { font-size: 0.75rem; color: var(--text-muted); writing-mode: vertical-rl; transform: rotate(180deg); text-align: center; border-left: 1px solid var(--glass-border); padding-left: 5px; margin-left: 5px; }
-.h-teams { display: flex; flex-direction: column; gap: 2px; flex-grow: 1; }
-.h-team { display: flex; justify-content: space-between; font-size: 0.9rem; }
-.h-team strong { color: var(--primary); }
-.h-result { font-family: var(--font-display); font-size: 1.1rem; min-width: 80px; text-align: right; display: flex; flex-direction: column; }
-.winner-text { color: var(--success); font-weight: bold; }
-.loser-text { color: var(--danger); font-size: 0.9rem; }
 
-.team-item {
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(255,255,255,0.05); padding: 10px; margin-bottom: 8px; border-radius: 8px;
+.score-wrapper {
+  display: flex;
+  align-items: baseline; /* Keeps numbers on the same bottom line */
+  gap: 4px;
 }
-.t-info { display: flex; align-items: center; gap: 12px; }
-.t-info img, .no-logo { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
-.no-logo { background: var(--primary); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; }
-.del-btn { color: var(--danger); font-size: 1.2rem; background: none; border: none; }
 
-/* --- LEADERBOARD HIGHLIGHTS --- */
-.highest-stats-box { display: flex; gap: 10px; margin-bottom: 15px; }
-.highest-stat { flex: 1; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid var(--glass-border); }
-.highest-stat .label { display: block; font-size: 0.8rem; margin-bottom: 5px; }
-.highest-stat .label.orange { color: #fb923c; }
-.highest-stat .label.purple { color: #c084fc; }
-.highest-stat .value { font-family: var(--font-display); font-size: 1.2rem; color: white; }
+.score-big {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  line-height: 1;
+  color: white;
+}
 
-/* --- SCOREBOARD --- */
-.scoreboard-card { padding: 15px; text-align: center; display: flex; flex-direction: column; height: 100%; }
-.match-header { padding: 10px 20px; background: rgba(0,0,0,0.3); display: flex; justify-content: space-between; align-items: center; }
-.team-badge { font-family: var(--font-display); font-size: 1.5rem; color: white; }
+.wickets-divider {
+  font-size: 2.5rem;
+  color: var(--text-muted);
+}
 
-.main-score-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 10px; }
-.score-big { font-family: var(--font-display); font-size: 4rem; line-height: 1; color: white; }
-.wickets { font-size: 2.5rem; color: var(--text-muted); }
-.overs-area span { font-size: 0.8rem; color: var(--primary); display: block; text-align: right; }
+.wickets-big {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--text-muted);
+}
+
+.overs-area { text-align: right; }
+.overs-area span { font-size: 0.8rem; color: var(--primary); display: block; }
 .overs-area strong { font-family: var(--font-display); font-size: 2.2rem; color: var(--accent); line-height: 1; }
 
-.control-pad { background: #0f172a; padding: 15px; border-top: 1px solid var(--glass-border); display: grid; gap: 10px; margin-top: auto; }
-.pad-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.header-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--glass-border);
+}
+
+.chase-msg {
+  background: rgba(250, 204, 21, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+/* --- CONTROL PAD & UNDO --- */
+.control-pad { 
+  background: #0f172a; 
+  padding: 15px; 
+  border-top: 1px solid var(--glass-border); 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto; 
+}
+
+.pad-row { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr; 
+  gap: 10px; 
+}
+
 .control-pad button { padding: 15px 0; font-size: 1.4rem; border-radius: 10px; background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.05); }
 .btn-boundary { background: var(--success) !important; color: black !important; }
 .btn-six { background: var(--primary) !important; color: black !important; }
 .btn-wicket { background: var(--danger) !important; }
+.btn-extra { background: var(--accent) !important; color: black !important; }
 
-/* --- LAYOUT UTILS --- */
-.setup-mode { padding: 20px; }
-.center-content { justify-content: center; text-align: center; }
-.menu-grid { display: grid; gap: 12px; margin-top: 20px; }
-
-/* ... (Keep previous CSS) ... */
-
-/* Winner/Loser Text in History */
-.winner-text { color: var(--success); font-weight: bold; font-size: 0.95rem; display: block; }
-.loser-text { color: var(--danger); font-size: 0.85rem; display: block; opacity: 0.8; }
-
-/* Leaderboard Highlights Box */
-.highest-stats-box {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+.btn-undo {
+  grid-column: 1 / -1;   /* makes it full width properly */
+  background: #334155 !important;
+  color: #fca5a5 !important;
+  font-size: 1rem !important;
+  text-transform: uppercase;
+  border: 1px dashed #ef4444 !important;
 }
 
-.highest-stat {
+.scoreboard-card {
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.highest-stat .label {
-  display: block;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-}
-
-.highest-stat .label.orange { color: #fb923c; }
-.highest-stat .label.purple { color: #c084fc; }
-
-.highest-stat .value {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  color: white;
-}
-
-/* ... (Keep all your existing CSS) ... */
-
-/* --- LEADERBOARD GRID STYLES --- */
-.lb-header-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr; /* Name takes 2x space */
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--glass-border);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.lb-row-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  align-items: center;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  margin-bottom: 5px;
-  border-radius: 6px;
-}
-
-.lb-row-grid .p-name {
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.lb-row-grid .p-val {
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: #aaa;
-}
-
-.lb-row-grid .p-val.highlight {
-  color: white;
-  font-size: 1.3rem;
-  color: var(--accent); /* Highlights the Runs column */
-}
-
-/* ... (Keep existing CSS) ... */
-
-/* --- POPUP MODAL --- */
-.popup-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  position: relative;
   display: flex;
+  flex-direction: column;
+}
+
+.result-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
-}
-
-.popup-card {
-  background: #1e293b;
-  padding: 20px;
+  gap: 20px;
+  z-index: 10;
   border-radius: 12px;
-  border: 1px solid var(--primary);
-  width: 80%;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.popup-card h3 {
-  color: var(--text-main);
-  margin-top: 0;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
+
+
+/* --- LISTS, HISTORY & LEADERBOARD --- */
+.history-list, .team-list { padding: 15px; overflow-y: auto; flex-grow: 1; }
+
+.history-card { 
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); 
+  border-radius: 10px; padding: 12px; margin-bottom: 10px; 
+  display: flex; align-items: center; justify-content: space-between;
+}
+.winner-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+.loser-text { color: var(--danger); font-size: 0.85rem; opacity: 0.8; }
+
+.highest-stats-box { display: flex; gap: 10px; margin-bottom: 20px; }
+.highest-stat { flex: 1; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); padding: 15px; border-radius: 10px; text-align: center; }
+.highest-stat .label.orange { color: #fb923c; }
+.highest-stat .label.purple { color: #c084fc; }
+.highest-stat .value { font-family: var(--font-display); font-size: 1.4rem; color: white; }
+
+.lb-header-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 8px 12px; border-bottom: 1px solid var(--glass-border); font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+.lb-row-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; align-items: center; padding: 10px 12px; background: rgba(255, 255, 255, 0.05); margin-bottom: 5px; border-radius: 6px; }
+.lb-row-grid .p-val.highlight { color: var(--accent); font-size: 1.3rem; }
+
+/* --- POPUP MODAL --- */
+.popup-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(5px); }
+.popup-card { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid var(--primary); width: 80%; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+.popup-card h3 { color: var(--text-main); margin-top: 0; font-family: var(--font-display); font-size: 1.5rem; }
+
+/* --- UTILS --- */
+.setup-mode { padding: 20px; overflow-y: auto; }
+.center-content { justify-content: center; text-align: center; align-items: center; }
+.menu-grid { display: grid; gap: 12px; margin-top: 20px; }
+
+.vs-text {
+  align-self: center;
+  color: var(--danger);
+  font-weight: bold;
+}
+.vs-badge {
+  color: var(--accent);
+  font-weight: bold;
 }
